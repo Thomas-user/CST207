@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <limits>
 #include <list>
+#include <ctime>
 using namespace std;
 
 struct StudyTask {
@@ -135,35 +136,54 @@ int main() {
     // Teammates: Uncomment your function calls inside the correct block!
     // =========================================================
 
-    if (algoChoice == 1 || algoChoice == 5) {
+    if (algoChoice == 1) {
         // Student 5: Put your AI Module call here
         // runAIRecommendation(activeScenario, activeNumTasks);
     }
-    
-    if (algoChoice == 2 || algoChoice == 5) {
+    else if (algoChoice == 2) {
         // Student 2: Put your Sorting Module call here
         // runSortingModule(activeScenario, activeNumTasks);
     }
-    
-    if (algoChoice == 3 || algoChoice == 5) {
+    else if (algoChoice == 3) {
         // Student 3: Put your Greedy Module call here
         // Note: You will need to prompt the user for 'Available Time' inside your function!
         // runGreedyModule(activeScenario, activeNumTasks);
     }
-    
-    if (algoChoice == 4 || algoChoice == 5) {
+    else if (algoChoice == 4) {
         selectedTasks = runDynamicProgrammingModule(activeScenario, activeNumTasks);
         cout << "\nOptimal Tasks Selected:" << endl;
         for (const auto& task : selectedTasks) {
             cout << "- " << task.taskID << " (" << task.taskName << ")" << endl;
         }
     }
+    else if (algoChoice == 5){
+        double startTime, duration;
+        int totalImportance = 0, totalStudyTime = 0;
 
-    if (algoChoice < 1 || algoChoice > 5) {
-        cout << "Invalid strategy selected." << endl;
-    } else {
-        cout << "\nExecution Complete!" << endl;
+        // Dynamic Programming: Performance Measurement and Comparison
+        startTime = clock();
+        selectedTasks = runDynamicProgrammingModule(activeScenario, activeNumTasks);
+        duration = double(clock() - startTime) / CLOCKS_PER_SEC;
+        for (const auto& task : selectedTasks) {
+            totalImportance += task.importanceScore;
+            totalStudyTime += task.estimatedStudyTime;
+        }
+        string comment = "The DP algorithm identifies the optimal subset of tasks that maximizes the importance score within the given available time capacity. It considers all combinations of tasks and their respective study times and importance scores to find the best possible solution.";
+        string tasks = "";
+        for (const auto& task : selectedTasks) {
+            tasks += task.taskID + ", ";
+        }
+        cout << "\nDynamic Programming: Selected Tasks: " << tasks << "\n";
+        cout << "Dynamic Programming: Total Study Time: " << totalStudyTime << "\n";
+        cout << "Dynamic Programming: Total Importance Score: " << totalImportance << "\n";
+        cout << "Dynamic Programming: Execution Time: " << duration << " seconds\n";
+        cout << "Dynamic Programming: Comment: " << comment << "\n";
     }
+    else{
+        cout << "Invalid strategy selected." << endl;
+        return -1;
+    }
+    cout << "\nExecution Complete!" << endl;
 
     return 0;
 }
