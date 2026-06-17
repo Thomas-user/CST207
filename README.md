@@ -140,15 +140,15 @@ The model should predict one of the following strategy classes:
 Students must compare the implemented strategies using suitable indicators. The comparison should include both practical results and algorithm analysis.
 Students must complete this table with their result:
 
-| Strategy              | Selected | Tasks | Total Study Time | Total Importance | Execution Time | Comment |
-| --------------------- | -------- | ----- | ---------------- | ---------------- | -------------- | ------- |
-| Sorting-based ranking |          |       |                  |                  |                |         |
-| Greedy strategy       |          |       |                  |                  |                |         |
-| Dynamic Programming   |          |       |                  |                  |                |         |
-| AI/ML recommendation  |          |       |                  |                  |                |         |
+| Strategy              | Selected Tasks | Total Study Time | Total Importance | Execution Time | Comment |
+| --------------------- | -------------- | ---------------- | ---------------- | -------------- | ------- |
+| Sorting-based ranking |                |                  |                  |                |         |
+| Greedy strategy       |                |                  |                  |                |         |
+| Dynamic Programming   |                |                  |                  |                |         |
+| AI/ML recommendation  |                |                  |                  |                |         |
 >Table 7: Strategy Performance Comparison Summary.
 
-Students must complete the strategy comparison table for each tested scenario. For each strategy, they  should  list  the  selected  tasks,  calculate  the  total  study  time  used,  calculate  the  total importance score, record the execution time, and add a short comment explaining the result. The comparison should show which strategy performs better for the given  scenario  and  why Execution time can be measured using simple C/C++ timing functions, such as clock().
+Students must complete the strategy comparison table for each tested scenario. For each strategy, they  should  list  the  selected  tasks,  calculate  the  total  study  time  used,  calculate  the  total importance score, record the execution time, and add a short comment explaining the result. The comparison should show which strategy performs better for the given scenario and why. Execution time can be measured using simple C/C++ timing functions, such as clock().
 ## J. Individual Component (43% Marks)
 Each student must write an individual section of approximately 3–4 pages, excluding tables
 and  references. Each  student  must  cite  at  least  three  credible  references  for  the  individual component, especially when discussing the modern or alternative algorithm. IEEE referencing style is recommended.
