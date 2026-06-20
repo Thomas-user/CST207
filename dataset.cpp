@@ -45,28 +45,47 @@ int createCustomScenario(StudyTask customArray[], int &availableTime) {
     do {
         cout << "How many tasks? (Must be between 8 and 15): ";
         cin >> numTasks;
+        if (cin.fail()) {
+            cin.clear(); // Clear the crash state
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Empty the trash
+            numTasks = 0; // Force loop to repeat
+            cout << "-> ERROR: Please enter numbers only.\n";
+        }
     } while (numTasks < 8 || numTasks > 15);
 
     cout << "Enter the Total Available Time (Wallet in hours): ";
-    cin >> availableTime;
+    while (!(cin >> availableTime)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "-> ERROR: Invalid input. Enter a valid number: ";
+    }
 
     for (int i = 0; i < numTasks; i++) {
-        cout << "\n--- Task " << (i + 1) << " ---" << endl;
-        cout << "ID (e.g., T1): ";
-        cin >> customArray[i].taskID;
-        cin.ignore(); 
-        cout << "Name: ";
-        getline(cin, customArray[i].taskName);
-        cout << "Estimated Time (Hours): ";
-        cin >> customArray[i].estimatedStudyTime;
-        cout << "Importance Score (1-5): ";
-        cin >> customArray[i].importanceScore;
-        cout << "Deadline (Days): ";
-        cin >> customArray[i].deadline;
-        cout << "Difficulty (1-5): ";
-        cin >> customArray[i].difficultyLevel;
-        cout << "Type (Lecture/Tutorial/Practice/Assignment/Revision): ";
-        cin >> customArray[i].taskType;
+        cout << "Task " << (i + 1) << ": ";
+        
+        char comma; // A dummy variable to "eat" the commas
+        
+        // 1. Read ID (Stops at the first comma)
+        getline(cin >> ws, customArray[i].taskID, ',');
+        
+        // 2. Read Name (Stops at the second comma)
+        getline(cin >> ws, customArray[i].taskName, ',');
+        
+        // 3. Read the 4 integers and "eat" the commas between them
+        cin >> customArray[i].estimatedStudyTime >> comma
+            >> customArray[i].importanceScore >> comma
+            >> customArray[i].deadline >> comma
+            >> customArray[i].difficultyLevel >> comma;
+            
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "-> ERROR: Format mismatch! Please re-enter Task " << (i + 1) << " correctly.\n";
+            i--; // Go backward 1 step to let them retry this exact task!
+            continue; 
+        }
+        // 4. Read the Type (Grabs the rest of the line)
+        getline(cin >> ws, customArray[i].taskType);
     }
     return numTasks; 
 }
@@ -418,7 +437,12 @@ int main() {
         cout << "5. Exit Program\n";
         cout << "========================================\n";
         cout << "Select an option (1-5): ";
-        cin >> scenarioChoice;
+
+        while (!(cin >> scenarioChoice)) {
+            cin.clear(); // Clear the crash state
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Empty the trash
+            cout << "-> ERROR: Letters are not allowed.\nSelect an option (1-5): ";
+        }
 
         if (scenarioChoice == 5) {
             cout << "\nShutting down StudySmart AI. Goodbye!\n";
@@ -506,7 +530,11 @@ int main() {
         cout << "7. Exit Program\n";
         cout << "========================================\n";
         cout << "Select a strategy (1-7): ";
-        cin >> algoChoice;
+        while (!(cin >> algoChoice)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "-> ERROR: Letters are not allowed.\nSelect a strategy (1-7): ";
+        }
 
         if (algoChoice == 7) {
             cout << "\nShutting down StudySmart AI. Goodbye!\n";
@@ -527,7 +555,11 @@ int main() {
             cout << "3. Shortest Study Time First (Quick Wins)\n";
             cout << "4. Highest Difficulty First\n";
             cout << "Choice (1-4): ";
-            cin >> activeSortMode;
+            while (!(cin >> activeSortMode)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "-> ERROR: Letters are not allowed.\nChoice (1-4): ";
+            }
             if (activeSortMode < 1 || activeSortMode > 4) activeSortMode = 1;
         }
 
